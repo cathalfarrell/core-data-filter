@@ -16,10 +16,8 @@ struct ContentView: View {
 
     var body: some View {
             VStack {
-                // list of matching singers - custom
-                //FilteredList(filter: lastNameFilter)
 
-                //Generic Filter
+                //Generic Filter - pass in the key and attribute on which to filter
                 FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer) in
                     Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
                 }
