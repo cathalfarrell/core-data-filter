@@ -17,12 +17,7 @@ struct ContentView: View {
     var body: some View {
             VStack {
                 // list of matching singers - custom
-                //FilteredList(filter: lastNameFilter)
-
-                //Generic Filter
-                FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer) in
-                    Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
-                }
+                FilteredList(filter: lastNameFilter)
 
                 Button("Add Examples") {
                     let taylor = Singer(context: self.moc)

@@ -7,9 +7,11 @@
 //
 import CoreData
 import SwiftUI
-/*
+
 // MARK:- Custom Filter for Singer
 struct FilteredList: View {
+
+    let predicate = "lastName BEGINSWITH %@"
 
     var fetchRequest: FetchRequest<Singer>
     var singers: FetchedResults<Singer> { fetchRequest.wrappedValue }
@@ -21,26 +23,7 @@ struct FilteredList: View {
     }
 
     init(filter: String) {
-        fetchRequest = FetchRequest<Singer>(entity: Singer.entity(), sortDescriptors: [], predicate: NSPredicate(format: "lastName BEGINSWITH %@", filter))
-    }
-}*/
-
-// MARK:- Generic Filter for anything
-struct FilteredList<T: NSManagedObject, Content: View>: View {
-    var fetchRequest: FetchRequest<T>
-    var singers: FetchedResults<T> { fetchRequest.wrappedValue }
-
-    // this is our content closure; we'll call this once for each item in the list
-    let content: (T) -> Content
-
-    var body: some View {
-        List(singers, id: \.self) { singer in
-            self.content(singer)
-        }
-    }
-
-    init(filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
-        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: [], predicate: NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue))
-        self.content = content
+        //Custom filter created when initialised
+        fetchRequest = FetchRequest<Singer>(entity: Singer.entity(), sortDescriptors: [], predicate: NSPredicate(format: predicate, filter))
     }
 }
