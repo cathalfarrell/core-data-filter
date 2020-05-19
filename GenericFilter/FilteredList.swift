@@ -12,6 +12,10 @@ import SwiftUI
  Challenge 1 - Make it accept an array of NSSortDescriptor objects to get used in its fetch request.
  */
 
+/*
+ Challenge 2 - Make it accept a string parameter that controls which predicate is applied. You can use Swift’s string interpolation to place this in the predicate.
+ */
+
 // MARK:- Generic Filter for anything
 struct FilteredList<T: NSManagedObject, Content: View>: View {
     var fetchRequest: FetchRequest<T>
@@ -26,8 +30,8 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
 
-    init(filterKey: String, filterValue: String, sortDescriptors: [NSSortDescriptor], @ViewBuilder content: @escaping (T) -> Content) {
-        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: sortDescriptors, predicate: NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue))
+    init(filterPredicate: String, filterKey: String, filterValue: String, sortDescriptors: [NSSortDescriptor], @ViewBuilder content: @escaping (T) -> Content) {
+        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: sortDescriptors, predicate: NSPredicate(format: filterPredicate, filterKey, filterValue))
         self.content = content
     }
 }

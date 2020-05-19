@@ -14,13 +14,15 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @State private var lastNameFilter = "S"
 
+    let stringPredicate = "%K BEGINSWITH %@"
+
     let sortDescriptors: [NSSortDescriptor] = [NSSortDescriptor(key: "lastName", ascending: true), NSSortDescriptor(key: "firstName", ascending: false) ]
 
     var body: some View {
             VStack {
 
                 //Generic Filter - pass in the key and attribute on which to filter
-                FilteredList(filterKey: "lastName", filterValue: lastNameFilter, sortDescriptors: sortDescriptors) { (singer: Singer) in
+                FilteredList(filterPredicate: stringPredicate, filterKey: "lastName", filterValue: lastNameFilter, sortDescriptors: sortDescriptors) { (singer: Singer) in
                     Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
                 }
 
