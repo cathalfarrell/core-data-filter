@@ -16,6 +16,14 @@ import SwiftUI
  Challenge 2 - Make it accept a string parameter that controls which predicate is applied. You can use Swift’s string interpolation to place this in the predicate.
  */
 
+/*
+ Challenge 3 - Modify the predicate string parameter to be an enum such as .beginsWith, then make that enum get resolved to a string inside the initializer.
+ */
+
+enum StringPredicate: String {
+    case beginsWith = "%K BEGINSWITH %@"
+}
+
 // MARK:- Generic Filter for anything
 struct FilteredList<T: NSManagedObject, Content: View>: View {
     var fetchRequest: FetchRequest<T>
@@ -30,8 +38,8 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
 
-    init(filterPredicate: String, filterKey: String, filterValue: String, sortDescriptors: [NSSortDescriptor], @ViewBuilder content: @escaping (T) -> Content) {
-        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: sortDescriptors, predicate: NSPredicate(format: filterPredicate, filterKey, filterValue))
+    init(filterPredicate: StringPredicate, filterKey: String, filterValue: String, sortDescriptors: [NSSortDescriptor], @ViewBuilder content: @escaping (T) -> Content) {
+        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: sortDescriptors, predicate: NSPredicate(format: filterPredicate.rawValue, filterKey, filterValue))
         self.content = content
     }
 }
